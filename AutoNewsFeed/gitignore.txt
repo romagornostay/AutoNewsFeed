@@ -1,0 +1,16 @@
+# Xcode
+DerivedData/
+build/
+*.xcuserstate
+*.xcworkspace
+*.xcuserdata
+
+# macOS
+.DS_Store
+
+# Swift Package Manager
+/.packages
+/Package.resolved
+
+# Xcode previews
+*.preview-thumbnails
