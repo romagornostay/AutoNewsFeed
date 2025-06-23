@@ -16,6 +16,14 @@ final class NewsFeedViewController: UIViewController {
     title = "News"
     view.backgroundColor = .systemBackground
     setupCollectionView()
+    
+    viewModel.onUpdate = { [weak self] in
+        self?.collectionView.reloadData()
+    }
+    Task {
+        await viewModel.loadInitial()
+    }
+
   }
   
   private func setupCollectionView() {
@@ -48,7 +56,8 @@ extension NewsFeedViewController: UICollectionViewDataSource {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsCell.reuseId, for: indexPath) as? NewsCell else {
       fatalError("Could not dequeue NewsCell")
     }
-    cell.configure(with: viewModel.items[indexPath.item])
+    let item = viewModel.item(at: indexPath.item)
+    cell.configure(with: item)
     return cell
   }
 }

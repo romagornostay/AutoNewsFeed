@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol NewsService {
+  func fetch(page: Int, count: Int) async throws -> [NewsItem]
+}

@@ -14,7 +14,7 @@ enum NewsFeedLayout {
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     
     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                           heightDimension: .absolute(80))
+                                           heightDimension: .estimated(110))
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
     
     let section = NSCollectionLayoutSection(group: group)

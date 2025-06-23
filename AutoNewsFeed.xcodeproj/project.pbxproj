@@ -14,7 +14,7 @@
 		3171695D2E05888300A12C42 /* Exceptions for "AutoNewsFeed" folder in "AutoNewsFeed" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Support/Info.plist,
+				Info.plist,
 			);
 			target = 3171694A2E05888200A12C42 /* AutoNewsFeed */;
 		};
