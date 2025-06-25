@@ -9,34 +9,56 @@ import Foundation
 
 @MainActor
 final class NewsFeedViewModel {
-    private let service: NewsService
-    private(set) var items: [NewsItem] = []
-    var onUpdate: (() -> Void)?
+  private(set) var items: [NewsItem] = []
+  private var currentPage = 1
+  private let pageSize = 15
+  private(set) var isLoading = false {
+    didSet { onUpdate?() } // 🚀 Notify on state change
+  }
+  private var hasMorePages = true
+  
+  private let service: NewsService
+  var onUpdate: (() -> Void)?
+  
+  init(service: NewsService = MockNewsService()) {
+    self.service = service
+  }
 
-    init(service: NewsService = DefaultNewsService()) {
-        self.service = service
+  func loadInitial() async {
+    guard !isLoading else { return }
+    self.isLoading = true
+    
+    do {
+      let news = try await service.fetch(page: currentPage, count: pageSize)
+      items = news
+      hasMorePages = news.count == pageSize
+    } catch {
+      print("❌ Error loading news:", error)
+    }
+    self.isLoading = false
+  }
+  
+  func fetchNextPage() async {
+    guard !isLoading, hasMorePages else { return }
+    isLoading = true
+    currentPage += 1
+
+    do {
+      let news = try await service.fetch(page: currentPage, count: pageSize)
+      items += news
+      hasMorePages = news.count == pageSize
+    } catch {
+      print("❌ Error fetching next page:", error)
+      currentPage -= 1
     }
 
-    func loadInitial() async {
-        do {
-            let news = try await service.fetch(page: 1, count: 15)
-            self.items = news
-            onUpdate?()
-        } catch {
-            print("❌ Error loading news:", error)
-        }
-    }
+    isLoading = false
+  }
 
-    func item(at index: Int) -> NewsItem {
-        items[index]
-    }
+  func item(at index: Int) -> NewsItem? {
+    guard index < items.count else { return nil }
+    return items[index]
+  }
 
-    var count: Int {
-        items.count
-    }
-//  struct MockItem {
-//    let title: String
-//  }
-//  
-//  let items: [MockItem] = (1...20).map { MockItem(title: "Новость \($0)") }
+  var count: Int { items.count }
 }

@@ -27,8 +27,8 @@ final class NewsCell: UICollectionViewCell {
   
   override func prepareForReuse() {
     super.prepareForReuse()
-//    imageView.cancelImageLoad()
-//    imageView.image = nil
+    imageView.cancelImageLoad()
+    imageView.image = nil
   }
   
   private func setupUI() {
@@ -74,7 +74,8 @@ final class NewsCell: UICollectionViewCell {
   func configure(with item: NewsItem) {
     titleLabel.text = item.title
     subtitleLabel.text = item.description
-    dateLabel.text = item.publishedDate //formatDate(item.publishedDate)
+    dateLabel.text = dateFormatterMedium.string(from: dateFormateFromString(value: item.publishedDate))
+    //dateLabel.text = formatDate(item.publishedDate)
     
     if let url = URL(string: item.titleImageUrl) {
       imageView.load(from: url)
@@ -82,23 +83,40 @@ final class NewsCell: UICollectionViewCell {
       imageView.image = nil
     }
   }
-  private func formatDate(_ iso: String) -> String {
-    let isoFormatter = ISO8601DateFormatter()
-    let formatter = DateFormatter()
-    formatter.dateStyle = .medium
-    formatter.locale = Locale(identifier: "ru_RU")
-    return isoFormatter.date(from: iso).map { formatter.string(from: $0) } ?? ""
-  }
 //  private func formatDate(_ iso: String) -> String {
+//    let isoFormatter = ISO8601DateFormatter()
 //    let formatter = DateFormatter()
-//    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-//    formatter.locale = Locale(identifier: "ru_RU")
-//    formatter.timeZone = TimeZone(secondsFromGMT: 0)
 //    formatter.dateStyle = .medium
-//    
-//    guard let date = formatter.date(from: iso) else { return "" }
-//    let output = DateFormatter()
-//    output.dateFormat = "dd.MM.yyyy"
-//    return output.string(from: date)
+//    formatter.locale = Locale(identifier: "ru_RU")
+//    return isoFormatter.date(from: iso).map { formatter.string(from: $0) } ?? ""
 //  }
+  private func formatDate(_ iso: String) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+    formatter.locale = Locale(identifier: "ru_RU")
+//    formatter.timeZone = TimeZone(secondsFromGMT: 0)
+    formatter.dateStyle = .medium
+    
+    let date = formatter.date(from: iso) ?? Date()
+    let output = DateFormatter()
+    output.dateFormat = "dd.MM.yyyy"
+    return output.string(from: date)
+  }
+  
+  func dateFormateFromString(value: String) -> Date {
+    isoLikeFormatter.date(from: value) ?? Date()
+  }
+  
+  let dateFormatterMedium: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.locale = Locale(identifier: "ru_RU")
+    formatter.dateFormat = "dd.MM.yyyy"
+    return formatter
+  }()
+  private let isoLikeFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.locale = Locale(identifier: "ru_RU")
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+    return formatter
+  }()
 }
