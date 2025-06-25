@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Endpoint {
+public protocol Endpoint {
   var path: String { get }
   var queryItems: [URLQueryItem] { get }
   var url: URL? { get }
@@ -17,7 +17,7 @@ extension Endpoint {
   var host: String { "webapi.autodoc.ru" }
   var scheme: String { "https" }
   
-  var url: URL? {
+  public var url: URL? {
     var components = URLComponents()
     components.scheme = scheme
     components.host = host

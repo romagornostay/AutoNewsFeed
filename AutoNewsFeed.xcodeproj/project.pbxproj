@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3170359D2E0C4822001DF40E /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 3170359C2E0C4822001DF40E /* Network */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		3170359A2E0C1E79001DF40E /* Package */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Package; sourceTree = "<group>"; };
 		3171694B2E05888200A12C42 /* AutoNewsFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoNewsFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -36,16 +41,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3170359D2E0C4822001DF40E /* Network in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3170359B2E0C4822001DF40E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		317169422E05888200A12C42 = {
 			isa = PBXGroup;
 			children = (
+				3170359A2E0C1E79001DF40E /* Package */,
 				3171694D2E05888200A12C42 /* AutoNewsFeed */,
+				3170359B2E0C4822001DF40E /* Frameworks */,
 				3171694C2E05888200A12C42 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,6 +93,7 @@
 			);
 			name = AutoNewsFeed;
 			packageProductDependencies = (
+				3170359C2E0C4822001DF40E /* Network */,
 			);
 			productName = AutoNewsFeed;
 			productReference = 3171694B2E05888200A12C42 /* AutoNewsFeed.app */;
@@ -331,6 +347,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3170359C2E0C4822001DF40E /* Network */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Network;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 317169432E05888200A12C42 /* Project object */;
 }

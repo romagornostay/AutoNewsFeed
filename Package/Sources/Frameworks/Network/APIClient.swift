@@ -7,12 +7,13 @@
 
 import Foundation
 
-protocol APIClient {
+public protocol APIClient {
   func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T
 }
 
-final class DefaultAPIClient: APIClient {
-  func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
+public final class DefaultAPIClient: APIClient {
+  public init() {}
+  public func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
     guard let url = endpoint.url else {
       throw NetworkError.invalidURL
     }

@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum NetworkError: Error, LocalizedError {
+public enum NetworkError: Error, LocalizedError {
   case invalidURL
   case invalidResponse
   case decoding(Error)
   case unknown(Error)
   
-  var errorDescription: String? {
+  public var errorDescription: String? {
     switch self {
     case .invalidURL:
       return "⛔️ Невалидный URL"
