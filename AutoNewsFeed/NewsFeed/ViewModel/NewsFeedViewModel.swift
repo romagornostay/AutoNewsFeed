@@ -11,7 +11,7 @@ import Foundation
 final class NewsFeedViewModel {
   private(set) var items: [NewsItem] = []
   private var currentPage = 1
-  private let pageSize = 15
+  private let pageSize = 14
   private(set) var isLoading = false {
     didSet { onUpdate?() } // 🚀 Notify on state change
   }
@@ -20,7 +20,7 @@ final class NewsFeedViewModel {
   private let service: NewsService
   var onUpdate: (() -> Void)?
   
-  init(service: NewsService = MockNewsService()) {
+  init(service: NewsService = DefaultNewsService()) {
     self.service = service
   }
 

@@ -13,6 +13,6 @@ struct NewsItem: Decodable {
   let description: String
   let publishedDate: String
   let fullUrl: String
-  let titleImageUrl: String
+  let titleImageUrl: String?
   let categoryType: String
 }

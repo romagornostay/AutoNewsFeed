@@ -77,10 +77,10 @@ final class NewsCell: UICollectionViewCell {
     dateLabel.text = dateFormatterMedium.string(from: dateFormateFromString(value: item.publishedDate))
     //dateLabel.text = formatDate(item.publishedDate)
     
-    if let url = URL(string: item.titleImageUrl) {
+    if let urlString = item.titleImageUrl, let url = URL(string: urlString) {
       imageView.load(from: url)
     } else {
-      imageView.image = nil
+      imageView.image = UIImage(systemName: "cloud.moon.bolt")
     }
   }
 //  private func formatDate(_ iso: String) -> String {
