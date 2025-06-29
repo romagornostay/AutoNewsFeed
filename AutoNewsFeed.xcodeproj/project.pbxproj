@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3170359D2E0C4822001DF40E /* Network in Frameworks */ = {isa = PBXBuildFile; productRef = 3170359C2E0C4822001DF40E /* Network */; };
+		3125834D2E1156F400B80967 /* App in Frameworks */ = {isa = PBXBuildFile; productRef = 3125834C2E1156F400B80967 /* App */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3170359D2E0C4822001DF40E /* Network in Frameworks */,
+				3125834D2E1156F400B80967 /* App in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,7 +93,7 @@
 			);
 			name = AutoNewsFeed;
 			packageProductDependencies = (
-				3170359C2E0C4822001DF40E /* Network */,
+				3125834C2E1156F400B80967 /* App */,
 			);
 			productName = AutoNewsFeed;
 			productReference = 3171694B2E05888200A12C42 /* AutoNewsFeed.app */;
@@ -351,9 +351,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3170359C2E0C4822001DF40E /* Network */ = {
+		3125834C2E1156F400B80967 /* App */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Network;
+			productName = App;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
