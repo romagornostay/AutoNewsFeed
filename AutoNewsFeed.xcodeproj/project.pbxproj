@@ -16,9 +16,22 @@
 		31B05D822E1D792200E1A6E4 /* Package */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Package; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		31B05DA22E1D817E00E1A6E4 /* Exceptions for "AutoNewsFeed" folder in "AutoNewsFeed" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 31B05BF12E1D6BAB00E1A6E4 /* AutoNewsFeed */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		31B05BF42E1D6BAB00E1A6E4 /* AutoNewsFeed */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				31B05DA22E1D817E00E1A6E4 /* Exceptions for "AutoNewsFeed" folder in "AutoNewsFeed" target */,
+			);
 			path = AutoNewsFeed;
 			sourceTree = "<group>";
 		};
