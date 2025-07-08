@@ -1,0 +1,19 @@
+# 🧹 Xcode
+DerivedData/
+build/
+*.xcuserstate
+*.xcsettings
+*.xcuserdata
+
+#  macOS system files
+.DS_Store
+
+# SPM artifacts
+Package/.build/
+Package/.swiftpm/
+Package/.DS_Store
+/.packages
+/Package.resolved
+
+# Xcode previews
+*.preview-thumbnails
