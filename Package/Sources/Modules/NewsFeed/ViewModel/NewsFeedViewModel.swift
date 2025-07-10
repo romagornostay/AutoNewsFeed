@@ -10,9 +10,19 @@ import Models
 import Services
 
 final class NewsFeedViewModel {
+  
+  init(service: NewsService = DefaultNewsService()) {
+    self.service = service
+  }
+  
   private(set) var items: [NewsItem] = []
   private var currentPage = 1
   private let pageSize = 14
+  
+  private(set) var design: NewsCellDesign = .old {
+    didSet { onUpdate?() }
+  }
+  
   private(set) var isLoading = false {
     didSet { onUpdate?() } // 🚀 Notify on state change
   }
@@ -22,8 +32,8 @@ final class NewsFeedViewModel {
   var onUpdate: (() -> Void)?
   var onOpenNews: ((NewsItem) -> Void)?
   
-  init(service: NewsService = DefaultNewsService()) {
-    self.service = service
+  func setDesign(_ design: NewsCellDesign) {
+    self.design = design
   }
 
   @MainActor

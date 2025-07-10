@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Models
 
 final class NewsFeedViewController: UIViewController {
   
@@ -25,6 +26,8 @@ final class NewsFeedViewController: UIViewController {
     super.viewDidLoad()
     title = "News"
     view.backgroundColor = .systemBackground
+    
+    setupNavigationMenu()
     setupCollectionView()
     
     viewModel.onUpdate = { [weak self] in
@@ -50,6 +53,33 @@ final class NewsFeedViewController: UIViewController {
 //      navigationItem.scrollEdgeAppearance = appearance
   }
   
+  private func setupNavigationMenu() {
+    let oldAction = UIAction(
+      title: "Old Design",
+      image: UIImage(systemName: "square")
+    ) { [weak self] _ in
+      self?.viewModel.setDesign(.old)
+    }
+    
+    let newAction = UIAction(
+      title: "New Design",
+      image: UIImage(systemName: "rectangle.3.offgrid")
+    ) { [weak self] _ in
+      self?.viewModel.setDesign(.new)
+    }
+    
+    let menu = UIMenu(title: "Select Design", options: .displayInline, children: [oldAction, newAction])
+    
+    let menuButton = UIBarButtonItem(
+      title: nil,
+      image: UIImage(systemName: "slider.horizontal.3"),
+      primaryAction: nil,
+      menu: menu
+    )
+    
+    navigationItem.rightBarButtonItem = menuButton
+  }
+  
   private func setupCollectionView() {
     let layout = UICollectionViewCompositionalLayout { _, _ in
       return NewsFeedLayout.section()
@@ -59,6 +89,7 @@ final class NewsFeedViewController: UIViewController {
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .systemBackground
     collectionView.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell.reuseId)
+    collectionView.register(NewsCardCell.self, forCellWithReuseIdentifier: NewsCardCell.reuseId)
     collectionView.dataSource = self
     collectionView.delegate = self
     
@@ -88,12 +119,22 @@ extension NewsFeedViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsCell.reuseId, for: indexPath) as? NewsCell, let item = viewModel.item(at: indexPath.item) else {
-      fatalError("Could not dequeue NewsCell")
+    guard let item = viewModel.item(at: indexPath.item) else { fatalError("Could not get Item") }
+    switch viewModel.design {
+    case .old:
+      guard let cell = collectionView
+        .dequeueReusableCell(withReuseIdentifier: NewsCell.reuseId, for: indexPath) as? NewsCell
+      else { fatalError("Could not dequeue NewsCell") }
+      cell.configure(with: item)
+      return cell
+      
+    case .new:
+      guard let cell = collectionView
+        .dequeueReusableCell(withReuseIdentifier: NewsCardCell.reuseId, for: indexPath) as? NewsCardCell
+      else { fatalError("Could not dequeue NewsCardCell") }
+      cell.configure(with: item)
+      return cell
     }
-//    let item = viewModel.item(at: indexPath.item)
-    cell.configure(with: item)
-    return cell
   }
   
   func collectionView(
