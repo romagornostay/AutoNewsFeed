@@ -8,8 +8,18 @@
 import UIKit
 
 final class NewsFeedViewController: UIViewController {
+  
+  init(viewModel: NewsFeedViewModel) {
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   private var collectionView: UICollectionView!
-  private let viewModel = NewsFeedViewModel()
+  private let viewModel: NewsFeedViewModel
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -23,6 +33,21 @@ final class NewsFeedViewController: UIViewController {
     Task {
       await viewModel.loadInitial()
     }
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+
+      navigationItem.largeTitleDisplayMode = .always
+      navigationController?.navigationBar.prefersLargeTitles = true
+
+//      let appearance = UINavigationBarAppearance()
+//      appearance.configureWithDefaultBackground()
+//      appearance.titleTextAttributes = [.foregroundColor: UIColor.label]
+//      appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.label]
+//
+//      navigationItem.standardAppearance = appearance
+//      navigationItem.scrollEdgeAppearance = appearance
   }
   
   private func setupCollectionView() {
@@ -51,7 +76,11 @@ final class NewsFeedViewController: UIViewController {
   }
 }
 
-extension NewsFeedViewController: UICollectionViewDelegate { }
+extension NewsFeedViewController: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    viewModel.didSelectItem(at: indexPath.item)
+  }
+}
 
 extension NewsFeedViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

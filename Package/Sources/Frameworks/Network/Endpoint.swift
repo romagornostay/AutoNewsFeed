@@ -15,7 +15,6 @@ public protocol Endpoint {
 }
 
 extension Endpoint {
-//  var host: String { "webapi.autodoc.ru" }
   var scheme: String { "https" }
   
   public var url: URL? {

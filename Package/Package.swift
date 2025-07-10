@@ -49,7 +49,11 @@ extension Target {
       ),
       Target.module(
         name: .Module.newsFeed.rawValue,
-        dependencies: .frameworks([.network, .services])
+        dependencies: .modules([.newsDetail]) + .frameworks([.appNavigation, .network, .services])
+      ),
+      Target.module(
+        name: .Module.newsDetail.rawValue,
+        dependencies: .frameworks([.appNavigation])
       ),
     ]
   
@@ -65,12 +69,16 @@ extension Target {
         dependencies: .frameworks([.api, .models])
       ),
       Target.framework(
-        name: .Framework.models.rawValue,
+        name: .Framework.appNavigation.rawValue,
         dependencies: .frameworks([])
       ),
       Target.framework(
         name: .Framework.api.rawValue,
         dependencies: .frameworks([.network])
+      ),
+      Target.framework(
+        name: .Framework.models.rawValue,
+        dependencies: .frameworks([])
       ),
 //      Target.framework(
 //        name: .Framework.analytics.rawValue,
@@ -125,6 +133,7 @@ extension String {
   enum Framework: String {
     case network = "Network"
     case api = "API"
+    case appNavigation = "AppNavigation"
     case services = "Services"
     case support = "ModuleSupport"
     case models = "Models"
@@ -137,6 +146,7 @@ extension String {
   enum Module: String {
     case app = "App"
     case newsFeed = "NewsFeed"
+    case newsDetail = "NewsDetail"
     case main = "Main"
   }
   

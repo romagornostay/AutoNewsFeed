@@ -9,7 +9,6 @@ import Foundation
 import Models
 import Services
 
-@MainActor
 final class NewsFeedViewModel {
   private(set) var items: [NewsItem] = []
   private var currentPage = 1
@@ -21,40 +20,54 @@ final class NewsFeedViewModel {
   
   private let service: NewsService
   var onUpdate: (() -> Void)?
+  var onOpenNews: ((NewsItem) -> Void)?
   
   init(service: NewsService = DefaultNewsService()) {
     self.service = service
   }
 
+  @MainActor
   func loadInitial() async {
+    await fetchPage(reset: true)
+  }
+  
+  @MainActor
+  func fetchNextPage() async {
+    await fetchPage(reset: false)
+  }
+  
+  @MainActor
+  private func fetchPage(reset: Bool) async {
     guard !isLoading else { return }
-    self.isLoading = true
+    
+    isLoading = true
+    if reset {
+      currentPage = 1
+    } else {
+      guard hasMorePages else { return }
+      currentPage += 1
+    }
     
     do {
       let news = try await service.fetch(page: currentPage, count: pageSize)
-      items = news
+      if reset {
+        items = news
+      } else {
+        items += news
+      }
       hasMorePages = news.count == pageSize
     } catch {
-      print("❌ Error loading news:", error)
+      print("❌ Error \(reset ? "loading initial" : "fetching next") page:", error)
+      if !reset { currentPage -= 1 }
     }
-    self.isLoading = false
+    
+    isLoading = false
   }
   
-  func fetchNextPage() async {
-    guard !isLoading, hasMorePages else { return }
-    isLoading = true
-    currentPage += 1
-
-    do {
-      let news = try await service.fetch(page: currentPage, count: pageSize)
-      items += news
-      hasMorePages = news.count == pageSize
-    } catch {
-      print("❌ Error fetching next page:", error)
-      currentPage -= 1
-    }
-
-    isLoading = false
+  func didSelectItem(at index: Int) {
+      guard index < items.count else { return }
+      let item = items[index]
+      onOpenNews?(item)
   }
 
   func item(at index: Int) -> NewsItem? {
