@@ -142,7 +142,6 @@ extension String {
   
   enum Product {
     case nuke
-    case nukeUI
     case lottie
   }
   
@@ -231,11 +230,6 @@ extension Array where Element == Target.Dependency {
     case .nuke:
       result = Target.Dependency.product(
         name: "Nuke",
-        package: "Nuke"
-      )
-    case .nukeUI:
-      result = Target.Dependency.product(
-        name: "NukeUI",
         package: "Nuke"
       )
     case .lottie:

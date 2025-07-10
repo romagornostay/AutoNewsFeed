@@ -32,11 +32,34 @@ final class NewsCell: UICollectionViewCell {
     imageView.image = nil
   }
   
+  override func preferredLayoutAttributesFitting(
+    _ layoutAttributes: UICollectionViewLayoutAttributes
+  ) -> UICollectionViewLayoutAttributes {
+    setNeedsLayout()
+    layoutIfNeeded()
+    print("🔍 Calculating size for item with height: \(layoutAttributes.size.height)")
+    let targetSize = CGSize(width: layoutAttributes.size.width, height: UIView.layoutFittingCompressedSize.height)
+    let autoLayoutSize = contentView.systemLayoutSizeFitting(
+      targetSize,
+      withHorizontalFittingPriority: .required,
+      verticalFittingPriority: .fittingSizeLevel
+    )
+    
+    var updatedFrame = layoutAttributes.frame
+    updatedFrame.size.height = autoLayoutSize.height
+    layoutAttributes.frame = updatedFrame
+    return layoutAttributes
+  }
+
   private func setupUI() {
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.contentMode = .scaleAspectFill
     imageView.clipsToBounds = true
     imageView.layer.cornerRadius = 8
+    imageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
+    let height = imageView.heightAnchor.constraint(equalToConstant: 80)
+    height.priority = .defaultHigh
+    height.isActive = true
     
     titleLabel.font = .boldSystemFont(ofSize: 14)
     titleLabel.numberOfLines = 2
@@ -56,15 +79,12 @@ final class NewsCell: UICollectionViewCell {
     let mainStack = UIStackView(arrangedSubviews: [imageView, textStack])
     mainStack.axis = .horizontal
     mainStack.spacing = 12
-    mainStack.alignment = .center
+    mainStack.alignment = .top
     mainStack.translatesAutoresizingMaskIntoConstraints = false
     
     contentView.addSubview(mainStack)
     
     NSLayoutConstraint.activate([
-      imageView.widthAnchor.constraint(equalToConstant: 80),
-      imageView.heightAnchor.constraint(equalToConstant: 80),
-      
       mainStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
       mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
       mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),

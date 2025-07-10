@@ -10,12 +10,12 @@ import UIKit
 enum NewsFeedLayout {
   static func section() -> NSCollectionLayoutSection {
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                          heightDimension: .fractionalHeight(1.0))
+                                          heightDimension: .estimated(100))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     
     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                           heightDimension: .estimated(99))
-    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                                           heightDimension: .estimated(100))
+    let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
     
     let section = NSCollectionLayoutSection(group: group)
     section.interGroupSpacing = 12
