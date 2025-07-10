@@ -42,14 +42,21 @@ public final class NewsDetailViewController: UIViewController {
   
   public override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    navigationController?.navigationBar.prefersLargeTitles = false
-    navigationController?.navigationBar.barStyle = .default // .black для белого текста
-    navigationController?.navigationBar.isTranslucent = false
+    navigationItem.title = ""
+    navigationItem.largeTitleDisplayMode = .never
+    
+    let appearance = UINavigationBarAppearance()
+    appearance.configureWithOpaqueBackground()
+    appearance.backgroundColor = .systemBackground
+    appearance.shadowColor = nil
+    
+    navigationController?.navigationBar.standardAppearance = appearance
+    navigationController?.navigationBar.scrollEdgeAppearance = appearance
   }
 
   private func showError() {
     let label = UILabel()
-    label.text = "Не удалось загрузить новость"
+    label.text = "cant load news"
     label.textAlignment = .center
     label.textColor = .secondaryLabel
     view = label
