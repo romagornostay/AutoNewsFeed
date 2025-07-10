@@ -85,7 +85,9 @@ final class NewsFeedViewController: UIViewController {
       return NewsFeedLayout.section()
     }
     
-    collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    let newLayout = NewsFeedLayout.makeLayout()
+    
+    collectionView = UICollectionView(frame: .zero, collectionViewLayout: newLayout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .systemBackground
     collectionView.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell.reuseId)
