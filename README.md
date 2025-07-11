@@ -50,7 +50,7 @@ Cells support both the legacy and the new design styles so the UI looks consiste
 <p align="center">
   <img src="docs/iphone_placeholder.png" alt="iPhone" width="250"/>
   <img src="docs/iphone_placeholder_new.png" alt="iPhone" width="250"/>
-  <img src="docs/ipad_portrait_placeholder.png" alt="iPad Portrait" width="400"/>
-  <img src="docs/ipad_landscape_placeholder.png" alt="iPad Landscape" width="500"/>
+  <img src="docs/ipad_portrait_placeholder.png" alt="iPad Portrait" width="350"/>
+  <img src="docs/ipad_landscape_placeholder.png" alt="iPad Landscape" width="850"/>
 </p>
 
