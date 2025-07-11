@@ -12,7 +12,6 @@
 
 /* Begin PBXFileReference section */
 		31B05BF22E1D6BAB00E1A6E4 /* AutoNewsFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoNewsFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		31B05C2A2E1D6BFB00E1A6E4 /* AutoNewsFeed.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = AutoNewsFeed.xcodeproj; sourceTree = "<group>"; };
 		31B05D822E1D792200E1A6E4 /* Package */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Package; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,7 +52,6 @@
 			isa = PBXGroup;
 			children = (
 				31B05D822E1D792200E1A6E4 /* Package */,
-				31B05C2A2E1D6BFB00E1A6E4 /* AutoNewsFeed.xcodeproj */,
 				31B05BF42E1D6BAB00E1A6E4 /* AutoNewsFeed */,
 				31B05BF32E1D6BAB00E1A6E4 /* Products */,
 			);
@@ -64,11 +62,6 @@
 			children = (
 				31B05BF22E1D6BAB00E1A6E4 /* AutoNewsFeed.app */,
 			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		31B05C2B2E1D6BFB00E1A6E4 /* Products */ = {
-			isa = PBXGroup;
 			name = Products;
 			sourceTree = "<group>";
 		};
@@ -127,12 +120,6 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 31B05BF32E1D6BAB00E1A6E4 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 31B05C2B2E1D6BFB00E1A6E4 /* Products */;
-					ProjectRef = 31B05C2A2E1D6BFB00E1A6E4 /* AutoNewsFeed.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				31B05BF12E1D6BAB00E1A6E4 /* AutoNewsFeed */,
