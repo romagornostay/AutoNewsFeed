@@ -5,8 +5,9 @@
 //  Created by Roman Gornostayev on 20.06.2025.
 //
 
-import UIKit
 import Models
+import UIKit
+import UIComponents
 
 final class NewsFeedViewController: UIViewController {
   
@@ -19,7 +20,13 @@ final class NewsFeedViewController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
-  private var collectionView: UICollectionView!
+  private lazy var collectionView: UICollectionView = {
+    let layout = NewsFeedLayout.makeLayout { [weak self] in
+      self?.viewModel.design ?? .old
+    }
+    return UICollectionView(frame: .zero, collectionViewLayout: layout)
+  }()
+  
   private let viewModel: NewsFeedViewModel
   
   override func viewDidLoad() {
@@ -43,14 +50,6 @@ final class NewsFeedViewController: UIViewController {
 
       navigationItem.largeTitleDisplayMode = .always
       navigationController?.navigationBar.prefersLargeTitles = true
-
-//      let appearance = UINavigationBarAppearance()
-//      appearance.configureWithDefaultBackground()
-//      appearance.titleTextAttributes = [.foregroundColor: UIColor.label]
-//      appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.label]
-//
-//      navigationItem.standardAppearance = appearance
-//      navigationItem.scrollEdgeAppearance = appearance
   }
   
   private func setupNavigationMenu() {
@@ -81,13 +80,6 @@ final class NewsFeedViewController: UIViewController {
   }
   
   private func setupCollectionView() {
-    let layout = UICollectionViewCompositionalLayout { _, _ in
-      return NewsFeedLayout.section()
-    }
-    
-    let newLayout = NewsFeedLayout.makeLayout()
-    
-    collectionView = UICollectionView(frame: .zero, collectionViewLayout: newLayout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.backgroundColor = .systemBackground
     collectionView.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell.reuseId)

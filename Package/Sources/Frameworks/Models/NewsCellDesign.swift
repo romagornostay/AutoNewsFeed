@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum NewsCellDesign {
-    case old
-    case new
+public enum NewsCellDesign: String {
+  case old
+  case new
 }

@@ -8,14 +8,6 @@
 import UIKit
 
 final class LoaderFooterView: UICollectionReusableView {
-  static let reuseId = "LoaderFooterView"
-  private let spinner: UIActivityIndicatorView = {
-    let spinner = UIActivityIndicatorView(style: .medium)
-    spinner.hidesWhenStopped = true
-    spinner.translatesAutoresizingMaskIntoConstraints = false
-    return spinner
-  }()
-  
   override init(frame: CGRect) {
     super.init(frame: frame)
     addSubview(spinner)
@@ -24,8 +16,16 @@ final class LoaderFooterView: UICollectionReusableView {
       spinner.centerYAnchor.constraint(equalTo: centerYAnchor)
     ])
   }
-  
   required init?(coder: NSCoder) { fatalError() }
+  
+  static let reuseId = "LoaderFooterView"
+  
+  private let spinner: UIActivityIndicatorView = {
+    let spinner = UIActivityIndicatorView(style: .medium)
+    spinner.hidesWhenStopped = true
+    spinner.translatesAutoresizingMaskIntoConstraints = false
+    return spinner
+  }()
   
   func configure(isLoading: Bool) {
     isLoading ? spinner.startAnimating() : spinner.stopAnimating()

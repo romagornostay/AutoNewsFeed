@@ -49,7 +49,7 @@ extension Target {
       ),
       Target.module(
         name: .Module.newsFeed.rawValue,
-        dependencies: .modules([.newsDetail]) + .frameworks([.appNavigation, .network, .services])
+        dependencies: .modules([.newsDetail]) + .frameworks([.appNavigation, .network, .services, .ui])
       ),
       Target.module(
         name: .Module.newsDetail.rawValue,
@@ -61,6 +61,22 @@ extension Target {
     
     let frameworks: [Target] = [
       Target.framework(
+        name: .Framework.api.rawValue,
+        dependencies: .frameworks([.network])
+      ),
+      Target.framework(
+        name: .Framework.appNavigation.rawValue,
+        dependencies: .frameworks([])
+      ),
+      Target.framework(
+        name: .Framework.formatters.rawValue,
+        dependencies: .frameworks([])
+      ),
+      Target.framework(
+        name: .Framework.models.rawValue,
+        dependencies: .frameworks([])
+      ),
+      Target.framework(
         name: .Framework.network.rawValue,
         dependencies: .frameworks([])
       ),
@@ -69,30 +85,13 @@ extension Target {
         dependencies: .frameworks([.api, .models])
       ),
       Target.framework(
-        name: .Framework.appNavigation.rawValue,
-        dependencies: .frameworks([])
+        name: .Framework.support.rawValue,
+        dependencies: .frameworks([.models])
       ),
       Target.framework(
-        name: .Framework.api.rawValue,
-        dependencies: .frameworks([.network])
+        name: .Framework.ui.rawValue,
+        dependencies: .frameworks([.formatters, .models, .support])
       ),
-      Target.framework(
-        name: .Framework.models.rawValue,
-        dependencies: .frameworks([])
-      ),
-//      Target.framework(
-//        name: .Framework.analytics.rawValue,
-//        dependencies:
-//            .frameworks([.models, .appsFlyer, .api]) + .products([
-//              .analyticsProduct,
-//              .crashlytics,
-//              .appMetricaCore,
-//            ])
-//      ),
-//      Target.framework(
-//        name: .Framework.user.rawValue,
-//        dependencies: .frameworks([.api, .transformers])
-//      ),
     ]
     
     // MARK: Binaries
@@ -131,23 +130,22 @@ extension Target {
 
 extension String {
   enum Framework: String {
-    case network = "Network"
+    case analytics = "Analytics"
     case api = "API"
     case appNavigation = "AppNavigation"
-    case services = "Services"
-    case support = "ModuleSupport"
-    case models = "Models"
-    case ui = "UIComponents"
-    case resources = "Resources"
     case formatters = "Formatters"
-    case analytics = "Analytics"
+    case models = "Models"
+    case network = "Network"
+    case resources = "Resources"
+    case services = "Services"
+    case support = "SupportKit"
+    case ui = "UIComponents"
   }
   
   enum Module: String {
     case app = "App"
     case newsFeed = "NewsFeed"
     case newsDetail = "NewsDetail"
-    case main = "Main"
   }
   
   enum Product {

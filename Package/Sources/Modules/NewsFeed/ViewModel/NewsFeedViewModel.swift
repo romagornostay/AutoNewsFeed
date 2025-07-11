@@ -8,6 +8,7 @@
 import Foundation
 import Models
 import Services
+import SupportKit
 
 final class NewsFeedViewModel {
   
@@ -17,14 +18,14 @@ final class NewsFeedViewModel {
   
   private(set) var items: [NewsItem] = []
   private var currentPage = 1
-  private let pageSize = 14
+  private let pageSize = 12
   
-  private(set) var design: NewsCellDesign = .old {
+  private(set) var design: NewsCellDesign = AppSettings.newsCellDesign {
     didSet { onUpdate?() }
   }
   
   private(set) var isLoading = false {
-    didSet { onUpdate?() } // 🚀 Notify on state change
+    didSet { onUpdate?() }
   }
   private var hasMorePages = true
   
@@ -34,6 +35,7 @@ final class NewsFeedViewModel {
   
   func setDesign(_ design: NewsCellDesign) {
     self.design = design
+    AppSettings.newsCellDesign = design
   }
 
   @MainActor
