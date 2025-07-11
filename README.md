@@ -37,3 +37,16 @@ Package
 - **Frameworks** provide reusable pieces such as networking, models, formatting and UI components.
 
 Each module can be developed and tested independently and then linked together through Swift Package Manager.
+
+## Orientation and layout
+
+The interface adapts to different orientations on iPhone and iPad. On iPhone the feed seamlessly rotates between portrait and landscape modes. On iPad, the feed displays two columns in portrait orientation and three columns when the device is rotated to landscape.
+
+Cells support both the legacy and the new design styles so the UI looks consistent regardless of which layout is enabled.
+
+## Screenshots
+
+<!-- Placeholder images; replace with real screenshots from the simulator -->
+![iPhone screenshot placeholder](docs/iphone_placeholder.png)
+![iPad portrait placeholder](docs/ipad_portrait_placeholder.png)
+![iPad landscape placeholder](docs/ipad_landscape_placeholder.png)
