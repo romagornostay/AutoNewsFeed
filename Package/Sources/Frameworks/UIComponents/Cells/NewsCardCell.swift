@@ -126,21 +126,4 @@ public final class NewsCardCell: UICollectionViewCell {
       imageView.image = UIImage(systemName: "photo")
     }
   }
-  
-  func dateFormateFromString(value: String) -> Date {
-    isoLikeFormatter.date(from: value) ?? Date()
-  }
-  
-  let dateFormatterMedium: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "ru_RU")
-    formatter.dateFormat = "dd.MM.yyyy"
-    return formatter
-  }()
-  private let isoLikeFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "ru_RU")
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-    return formatter
-  }()
 }
