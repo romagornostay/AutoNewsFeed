@@ -6,6 +6,7 @@
 //
 
 import Models
+import SupportKit
 import UIKit
 import UIComponents
 
@@ -46,6 +47,7 @@ final class NewsFeedViewController: UIViewController {
     viewModel.onUpdate = { [weak self] in
       self?.dataDisplayManager.applySnapshot()
       self?.collectionView.reloadData()
+      self?.setupNavigationMenu()
     }
     Task {
       await viewModel.loadInitial()
@@ -59,6 +61,15 @@ final class NewsFeedViewController: UIViewController {
   }
   
   private func setupNavigationMenu() {
+    let menuButton = UIBarButtonItem(
+      image: UIImage(systemName: "slider.horizontal.3"),
+      menu: makeMenu()
+    )
+    
+    navigationItem.rightBarButtonItem = menuButton
+  }
+  
+  private func makeMenu() -> UIMenu {
     let oldAction = UIAction(
       title: "Old Design",
       image: UIImage(systemName: "square")
@@ -73,16 +84,20 @@ final class NewsFeedViewController: UIViewController {
       self?.viewModel.setDesign(.new)
     }
     
-    let menu = UIMenu(title: "Select Design", options: .displayInline, children: [oldAction, newAction])
+    let cacheSize = String(format: "%.1f", AppSettings.imageCacheSizeMB)
+    let clearCacheAction = UIAction(
+      title: "Очистить кэш (\(cacheSize) МБ)",
+      image: UIImage(systemName: "trash")
+    ) { [weak self] _ in
+      AppSettings.clearImageCache()
+      self?.setupNavigationMenu()
+    }
     
-    let menuButton = UIBarButtonItem(
-      title: nil,
-      image: UIImage(systemName: "slider.horizontal.3"),
-      primaryAction: nil,
-      menu: menu
+    return UIMenu(
+      title: "Select Cells Design",
+      options: .displayInline,
+      children: [oldAction, newAction, clearCacheAction]
     )
-    
-    navigationItem.rightBarButtonItem = menuButton
   }
   
   private func setupCollectionView() {

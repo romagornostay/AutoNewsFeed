@@ -20,11 +20,7 @@ public final class NewsCardCell: UICollectionViewCell {
   
   public override init(frame: CGRect) {
     super.init(frame: frame)
-    contentView.backgroundColor = .systemGray6
-    contentView.layer.cornerRadius = 12
-    contentView.layer.masksToBounds = true
-    contentView.layer.borderColor = UIColor.separator.cgColor
-    contentView.layer.borderWidth = 0.5
+    setupContentView()
     setupUI()
   }
   
@@ -33,7 +29,6 @@ public final class NewsCardCell: UICollectionViewCell {
   public override func prepareForReuse() {
     super.prepareForReuse()
     imageView.cancelImageLoad()
-    imageView.image = nil
   }
   
   public override func preferredLayoutAttributesFitting(
@@ -54,13 +49,18 @@ public final class NewsCardCell: UICollectionViewCell {
     layoutAttributes.frame = updatedFrame
     return layoutAttributes
   }
-
   
+  private func setupContentView() {
+    contentView.backgroundColor = .systemGray6
+    contentView.layer.cornerRadius = 12
+    contentView.layer.masksToBounds = true
+    contentView.layer.borderColor = UIColor.separator.cgColor
+    contentView.layer.borderWidth = 0.5
+  }
+
   private func setupUI() {
     imageView.translatesAutoresizingMaskIntoConstraints = false
-    imageView.contentMode = .scaleAspectFill
     imageView.clipsToBounds = true
-    imageView.layer.cornerRadius = 0
     
     titleLabel.font = .boldSystemFont(ofSize: 18)
     titleLabel.numberOfLines = 2
@@ -121,11 +121,12 @@ public final class NewsCardCell: UICollectionViewCell {
     dateLabel.text = AppDateFormatters.formattedMedium(from: item.publishedDate)
     
     if let urlString = item.titleImageUrl, let url = URL(string: urlString) {
+      imageView.contentMode = .scaleAspectFill
       imageView.load(from: url)
     } else {
-      imageView.image = UIImage(systemName: "photo")?.withRenderingMode(.alwaysTemplate)
-      imageView.tintColor = .lightGray
       imageView.contentMode = .scaleAspectFit
+      imageView.tintColor = .lightGray
+      imageView.image = UIImage(systemName: "photo")?.withRenderingMode(.alwaysTemplate)
     }
   }
 }

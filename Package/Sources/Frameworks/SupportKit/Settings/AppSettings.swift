@@ -11,4 +11,14 @@ import Models
 public enum AppSettings {
   @UserDefaultEnum(key: "cellsDesign", defaultValue: .old)
   public static var newsCellDesign: NewsCellDesign
+  
+  // MARK: - Disk Cache Info
+  
+  public static var imageCacheSizeMB: Double {
+    ImageLoader.shared.getCacheSizeInMB()
+  }
+  
+  public static func clearImageCache() {
+    ImageLoader.shared.clearDiskCache()
+  }
 }

@@ -12,24 +12,26 @@ final class ImageLoader {
   
   private let memoryCache = NSCache<NSURL, UIImage>()
   private var tasks = [UIImageView: URLSessionDataTask]()
-  private let fileManager = FileManager.default
+  private let fileManager: FileManager
   private let diskCacheURL: URL
-  private let diskCacheLimitBytes: Int = 100 * 1024 * 1024 // 100 MB
   
   private init() {
+    self.fileManager = .default
+    
     let urls = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)
     diskCacheURL = urls[0].appendingPathComponent("ImageLoaderCache", isDirectory: true)
     
     try? fileManager.createDirectory(at: diskCacheURL, withIntermediateDirectories: true)
-    cleanDiskIfNeeded()
   }
   
   func load(from url: URL, into imageView: UIImageView) {
+    imageView.startLoading()
     tasks[imageView]?.cancel()
     
     if let cached = memoryCache.object(forKey: url as NSURL) {
       imageView.image = cached
       tasks[imageView] = nil
+      imageView.stopLoading()
       return
     }
     
@@ -37,18 +39,20 @@ final class ImageLoader {
       memoryCache.setObject(diskImage, forKey: url as NSURL)
       imageView.image = diskImage
       tasks[imageView] = nil
+      imageView.stopLoading()
       return
     }
     
     let task = URLSession.shared.dataTask(with: url) { [weak self, weak imageView] data, _, _ in
-      guard let self, let data, let image = UIImage(data: data) else { return }
+      guard let self, let data, let image = UIImage(data: data), let imageView else { return }
       
-      self.memoryCache.setObject(image, forKey: url as NSURL)
-      self.saveImageToDisk(image, for: url)
+      memoryCache.setObject(image, forKey: url as NSURL)
+      saveImageToDisk(image, for: url)
       
       DispatchQueue.main.async {
-        imageView?.image = image
-        self.tasks[imageView!] = nil
+        imageView.setImage(image, for: url)
+        imageView.stopLoading()
+        self.tasks[imageView] = nil
       }
     }
     
@@ -61,10 +65,39 @@ final class ImageLoader {
     tasks[imageView] = nil
   }
   
-  // MARK: - Disk Cache
+  func getCacheSizeInMB() -> Double {
+    let contents = (try? fileManager.contentsOfDirectory(
+      at: diskCacheURL,
+      includingPropertiesForKeys: [.fileSizeKey],
+      options: .skipsHiddenFiles
+    )) ?? []
+    
+    var currentSize = 0
+    for fileURL in contents {
+      let resource = try? fileURL.resourceValues(forKeys: [.fileSizeKey])
+      currentSize += resource?.fileSize ?? 0
+    }
+    return Double(currentSize) / 1024.0 / 1024.0
+  }
   
+  func clearDiskCache() {
+    let contents = (try? fileManager.contentsOfDirectory(
+      at: diskCacheURL,
+      includingPropertiesForKeys: nil,
+      options: .skipsHiddenFiles
+    )) ?? []
+
+    for fileURL in contents {
+      try? fileManager.removeItem(at: fileURL)
+    }
+  }
+
+
+    
   private func filePath(for url: URL) -> URL {
-    let filename = url.absoluteString.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? UUID().uuidString
+    let filename = url.absoluteString.addingPercentEncoding(
+      withAllowedCharacters: .alphanumerics
+    ) ?? UUID().uuidString
     return diskCacheURL.appendingPathComponent(filename)
   }
   
@@ -78,34 +111,5 @@ final class ImageLoader {
     guard let data = image.pngData() else { return }
     let path = filePath(for: url)
     try? data.write(to: path)
-    cleanDiskIfNeeded()
-  }
-  
-  private func cleanDiskIfNeeded() {
-    let contents = (try? fileManager.contentsOfDirectory(at: diskCacheURL, includingPropertiesForKeys: [.contentAccessDateKey, .fileSizeKey], options: .skipsHiddenFiles)) ?? []
-    
-    var files: [(url: URL, size: Int, accessDate: Date)] = []
-    
-    var currentSize = 0
-    
-    for fileURL in contents {
-      let resource = try? fileURL.resourceValues(forKeys: [.contentAccessDateKey, .fileSizeKey])
-      let size = resource?.fileSize ?? 0
-      let accessDate = resource?.contentAccessDate ?? Date.distantPast
-      currentSize += size
-      files.append((fileURL, size, accessDate))
-    }
-    
-    guard currentSize > diskCacheLimitBytes else { return }
-    
-    let sortedFiles = files.sorted { $0.accessDate < $1.accessDate }
-    
-    var sizeToFree = currentSize - diskCacheLimitBytes
-    
-    for file in sortedFiles {
-      try? fileManager.removeItem(at: file.url)
-      sizeToFree -= file.size
-      if sizeToFree <= 0 { break }
-    }
   }
 }

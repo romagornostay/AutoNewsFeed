@@ -5,11 +5,11 @@ import PackageDescription
 
 let package = Package(
   name: "AutoNewsFeed",
-  platforms: [.iOS(.v15)],
+  platforms: [.iOS(.v16)],
   products: Product.libraries(),
   //dependencies: Package.Dependency.dependencies(),
   targets: Target.targets(),
-  swiftLanguageModes: [.v5]
+  swiftLanguageModes: [.version("5.10")]
 )
 
 extension Product {
