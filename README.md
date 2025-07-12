@@ -47,6 +47,10 @@ Cells support both the legacy and the new design styles so the UI looks consiste
 ## Screenshots
 
 <!-- Placeholder images; replace with real screenshots from the simulator -->
-![iPhone screenshot placeholder](docs/iphone_placeholder.png)
-![iPad portrait placeholder](docs/ipad_portrait_placeholder.png)
-![iPad landscape placeholder](docs/ipad_landscape_placeholder.png)
+<p align="center">
+  <img src="docs/iphone_placeholder.png" alt="iPhone" width="200"/>
+  <img src="docs/iphone_placeholder_new.png" alt="iPhone" width="200"/>
+  <img src="docs/ipad_portrait_placeholder.png" alt="iPad Portrait" width="300"/>
+  <img src="docs/ipad_landscape_placeholder.png" alt="iPad Landscape" width="720"/>
+</p>
+
