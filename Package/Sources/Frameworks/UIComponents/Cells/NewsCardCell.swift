@@ -123,7 +123,9 @@ public final class NewsCardCell: UICollectionViewCell {
     if let urlString = item.titleImageUrl, let url = URL(string: urlString) {
       imageView.load(from: url)
     } else {
-      imageView.image = UIImage(systemName: "photo")
+      imageView.image = UIImage(systemName: "photo")?.withRenderingMode(.alwaysTemplate)
+      imageView.tintColor = .lightGray
+      imageView.contentMode = .scaleAspectFit
     }
   }
 }

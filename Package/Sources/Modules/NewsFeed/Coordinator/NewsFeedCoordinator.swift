@@ -29,11 +29,10 @@ public final class NewsFeedCoordinator: Coordinator {
   }
   
   private func startNewsDetailCoordinator(with item: NewsItem) {
-      let coordinator = NewsDetailCoordinator(
-        navigationController: navigationController,
-        newsItem: item
-      )
-      coordinator.start()
+    let coordinator = NewsDetailCoordinator(
+      navigationController: navigationController,
+      newsItem: item
+    )
+    coordinator.start()
   }
 }
-
