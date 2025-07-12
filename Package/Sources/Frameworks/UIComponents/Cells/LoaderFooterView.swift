@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class LoaderFooterView: UICollectionReusableView {
-  override init(frame: CGRect) {
+public final class LoaderFooterView: UICollectionReusableView {
+  public override init(frame: CGRect) {
     super.init(frame: frame)
     addSubview(spinner)
     NSLayoutConstraint.activate([
@@ -18,16 +18,15 @@ final class LoaderFooterView: UICollectionReusableView {
   }
   required init?(coder: NSCoder) { fatalError() }
   
-  static let reuseId = "LoaderFooterView"
-  
   private let spinner: UIActivityIndicatorView = {
     let spinner = UIActivityIndicatorView(style: .medium)
     spinner.hidesWhenStopped = true
     spinner.translatesAutoresizingMaskIntoConstraints = false
     return spinner
   }()
+  public static let reuseId = "LoaderFooterView"
   
-  func configure(isLoading: Bool) {
+  public func configure(isLoading: Bool) {
     isLoading ? spinner.startAnimating() : spinner.stopAnimating()
   }
 }

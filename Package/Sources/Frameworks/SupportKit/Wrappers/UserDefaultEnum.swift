@@ -1,5 +1,5 @@
 //
-//  UserDefault.swift
+//  UserDefaultEnum.swift
 //  AutoNewsFeed
 //
 //  Created by Roman Gornostayev on 11.07.2025.

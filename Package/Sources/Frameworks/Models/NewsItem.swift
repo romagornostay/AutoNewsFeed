@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct NewsItem: Decodable {
+public struct NewsItem: Decodable, Hashable {
   public init(
     id: Int,
     title: String,

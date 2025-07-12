@@ -34,11 +34,6 @@
 			path = AutoNewsFeed;
 			sourceTree = "<group>";
 		};
-		31F1ED5F2E21442E00E332B2 /* docs */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = docs;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +51,6 @@
 		31B05BE92E1D6BAB00E1A6E4 = {
 			isa = PBXGroup;
 			children = (
-				31F1ED5F2E21442E00E332B2 /* docs */,
 				31B05D822E1D792200E1A6E4 /* Package */,
 				31B05BF42E1D6BAB00E1A6E4 /* AutoNewsFeed */,
 				31B05BF32E1D6BAB00E1A6E4 /* Products */,
@@ -88,7 +82,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				31B05BF42E1D6BAB00E1A6E4 /* AutoNewsFeed */,
-				31F1ED5F2E21442E00E332B2 /* docs */,
 			);
 			name = AutoNewsFeed;
 			packageProductDependencies = (

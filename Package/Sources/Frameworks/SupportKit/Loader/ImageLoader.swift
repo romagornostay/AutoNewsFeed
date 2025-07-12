@@ -16,7 +16,6 @@ final class ImageLoader {
   private init() {}
   
   func load(from url: URL, into imageView: UIImageView) {
-    // Отменяем старую задачу (если была)
     tasks[imageView]?.cancel()
     
     if let cached = cache.object(forKey: url as NSURL) {
