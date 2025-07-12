@@ -4,7 +4,7 @@ AutoNewsFeed is a sample iOS application that displays news from the Autodoc API
 
 ## Requirements
 - Xcode 15 or later
-- iOS 15 SDK
+- iOS 16 SDK
 
 ## Building
 1. Clone the repository
